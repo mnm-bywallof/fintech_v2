@@ -32,17 +32,17 @@ const Dashboard: React.FC = () => {
 
   const eventListener = () => {
     console.log("Listening for PubSub events!");
-    const pubsub = new PubSub({ projectId: "white-byway-374008" });
-    const topic = pubsub.topic("fintech");
-    const sub = topic.subscription(
-      "projects/white-byway-374008/subscriptions/fintech-sub"
-    );
-    sub.on("message", (message) => {
-      console.log(message.data);
-    });
-    sub.on("error", (error) => {
-      console.error(error);
-    });
+    // const pubsub = new PubSub({ projectId: "white-byway-374008" });
+    // const topic = pubsub.topic("fintech");
+    // const sub = topic.subscription(
+    //   "projects/white-byway-374008/subscriptions/fintech-sub"
+    // );
+    // sub.on("message", (message) => {
+    //   console.log(message.data);
+    // });
+    // sub.on("error", (error) => {
+    //   console.error(error);
+    // });
   };
 
   useEffect(() => {
@@ -88,11 +88,26 @@ const Dashboard: React.FC = () => {
         <Row>
           <Col md={7}>
             <label>As of {new Date().toDateString()}: Your balance:</label>
-            <h1>ZAR {client?.balance}</h1>
-            <BalanceModifier accountClient={client} withdrawal />
+            <h1>ZAR {client.balance}</h1>
+            <BalanceModifier
+              accountClient={client}
+              withdrawal
+              onSuccess={(n) => {
+                client.balance = n;
+                setClient(client);
+              }}
+            />
           </Col>
           <Col md={5}>
             <label htmlFor="previousTrans">Tools and Tech</label>
+            <ul>
+              <li>Google (Firebase) Cloud Functions</li>
+              <li>Firebase Hosting</li>
+              <li>GitHub (for Repository)</li>
+              <li>MySQL Database</li>
+              <li>Google Cloud Pub/Sub</li>
+              <li>React (TypeScript)</li>
+            </ul>
           </Col>
         </Row>
       </Container>

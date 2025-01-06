@@ -28,11 +28,13 @@ const style = {
 type ModifierType = {
   accountClient: Client;
   withdrawal?: boolean;
+  onSuccess: (newBalance: number) => void;
 };
 
 const BalanceModifier: React.FC<ModifierType> = ({
   accountClient,
   withdrawal,
+  onSuccess,
 }) => {
   const [open, setOpen] = React.useState(false);
   const [withdrawalAmount, setWithdrawalAmount] = useState(0);
@@ -48,6 +50,8 @@ const BalanceModifier: React.FC<ModifierType> = ({
       .get(url)
       .then((x) => {
         console.log(x.data);
+        onSuccess(x.data["balance"] as number);
+        setOpen(false);
       })
       .catch((e) => {
         console.error(e);
