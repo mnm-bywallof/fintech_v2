@@ -13,6 +13,7 @@ import { CSSProperties } from "styled-components";
 import { Client } from "../../global";
 import { httpsCallable } from "firebase/functions";
 import { functions } from "../../firebase";
+import axios from "axios";
 
 const style = {
   position: "absolute",
@@ -35,21 +36,21 @@ const BalanceModifier: React.FC<ModifierType> = ({
 }) => {
   const [open, setOpen] = React.useState(false);
   const [withdrawalAmount, setWithdrawalAmount] = useState(0);
+  const [url, setUrl] = useState(
+    `https://us-central1-white-byway-374008.cloudfunctions.net/withdrawV2?clientId=${accountClient.uid}&amount=${withdrawalAmount}`
+  );
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
   const handleWithdrawal = () => {
     console.log(accountClient);
-    httpsCallable(functions, "withdraw")
-      .call({
-        clientId: accountClient.uid,
-        amount: withdrawalAmount,
-      })
-      .then((res) => {
-        console.log(res.data);
+    axios
+      .get(url)
+      .then((x) => {
+        console.log(x.data);
       })
       .catch((e) => {
-        console.warn(e);
+        console.error(e);
       });
   };
 
@@ -75,6 +76,9 @@ const BalanceModifier: React.FC<ModifierType> = ({
               id="standard-adornment-amount"
               onChange={(e) => {
                 console.log(e.target.value);
+                setUrl(
+                  `https://us-central1-white-byway-374008.cloudfunctions.net/withdrawV2?clientId=${accountClient.uid}&amount=${e.target.value}`
+                );
                 setWithdrawalAmount(Number.parseInt(e.target.value));
               }}
               startAdornment={
@@ -84,6 +88,11 @@ const BalanceModifier: React.FC<ModifierType> = ({
           </FormControl>
           <Button onClick={handleWithdrawal}>Process</Button>
           <Button onClick={handleClose}>Cancel</Button>
+          <div style={{ padding: "30px" }}>
+            <label>withdraw by HTTPS Request (like API)</label>
+            <br />
+            <a href={url}>{url}</a>
+          </div>
         </Box>
       </Modal>
     </div>

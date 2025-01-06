@@ -32,17 +32,17 @@ const Dashboard: React.FC = () => {
 
   const eventListener = () => {
     console.log("Listening for PubSub events!");
-    // const pubsub = new PubSub({ projectId: "white-byway-374008" });
-    // const topic = pubsub.topic("fintech");
-    // const sub = topic.subscription(
-    //   "projects/white-byway-374008/subscriptions/fintech-sub"
-    // );
-    // sub.on("message", (message) => {
-    //   console.log(message.data);
-    // });
-    // sub.on("error", (error) => {
-    //   console.error(error);
-    // });
+    const pubsub = new PubSub({ projectId: "white-byway-374008" });
+    const topic = pubsub.topic("fintech");
+    const sub = topic.subscription(
+      "projects/white-byway-374008/subscriptions/fintech-sub"
+    );
+    sub.on("message", (message) => {
+      console.log(message.data);
+    });
+    sub.on("error", (error) => {
+      console.error(error);
+    });
   };
 
   useEffect(() => {

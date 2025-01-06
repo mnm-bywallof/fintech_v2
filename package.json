@@ -9,6 +9,7 @@
     "@mui/lab": "^6.0.0-beta.22",
     "@mui/material": "^6.3.1",
     "aws-sdk": "^2.1692.0",
+    "axios": "^1.7.9",
     "bootstrap": "^5.3.3",
     "cra-template-typescript": "1.2.0",
     "firebase": "^11.1.0",
@@ -19,7 +20,8 @@
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
     "stream": "^0.0.3",
-    "styled-components": "^6.1.14"
+    "styled-components": "^6.1.14",
+    "util": "^0.12.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -60,5 +62,6 @@
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "url": "^0.11.4"
-  }
+  },
+  "type": "module"
 }
